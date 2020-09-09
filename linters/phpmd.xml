@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset
+	name="crimea-linters-phpmd"
+	xmlns="http://pmd.sf.net/ruleset/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+	xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd"
+>
+	<exclude-pattern>storage/*</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>temp/*</exclude-pattern>
+
+	<!-- Цикломатическая сложность кода -->
+	<rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+		<properties>
+			<property name="reportLevel" value="16" />
+		</properties>
+	</rule>
+
+	<!-- В методах запрещено использовать exit() -->
+	<rule ref="rulesets/design.xml/ExitExpression"/>
+	<!-- В методах запрещено использовать eval() -->
+	<rule ref="rulesets/design.xml/EvalExpression"/>
+	<!-- В методах запрещено использовать goto() -->
+	<rule ref="rulesets/design.xml/GotoStatement"/>
+
+	<!-- Название переменных максимум 30 символов -->
+	<rule ref="rulesets/naming.xml/LongVariable">
+		<properties>
+			<property name="maximum" value="30" />
+		</properties>
+	</rule>
+
+	<!-- Константы должны быть в верхнем регистре -->
+	<rule ref="rulesets/naming.xml/ConstantNamingConventions"/>
+
+	<!-- Запрещено оставлять неиспользуемый код -->
+	<rule ref="rulesets/unusedcode.xml"/>
+</ruleset>

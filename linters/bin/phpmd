@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+dir=$(cd "${0%[/\\]*}/../" > /dev/null; pwd)
+cmd=${dir}/vendor/phpmd/phpmd/src/bin/phpmd
+
+"${cmd}" "$@" text ${dir}/phpmd.xml

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+dir=$(cd "${0%[/\\]*}/../" > /dev/null; pwd)
+cmd=${dir}/vendor/squizlabs/php_codesniffer/bin/phpcs
+
+"${cmd}" "$@" --runtime-set installed_paths ${dir}/vendor/escapestudios/symfony2-coding-standard,${dir}/vendor/slevomat/coding-standard --extensions=php --standard=${dir}/phpcs.xml

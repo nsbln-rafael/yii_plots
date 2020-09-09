@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="crimea-linters-phpcs">
+	<!-- Исключаем vendor, так как на него повлиять не можем -->
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<!-- Исключаем файл Yii.php т.к. он нужен только для автокомплита -->
+	<exclude-pattern>*Yii.php</exclude-pattern>
+
+	<!-- Выравниваем открывающую и закрывающую скобки при многострочном объявлении -->
+	<rule ref="Generic.Arrays.ArrayIndent.CloseBraceIncorrect">
+		<!-- Исключаем файлы-вьюшки -->
+		<exclude-pattern>/views/*</exclude-pattern>
+		<!-- Исключаем классы-вьюшки -->
+		<exclude-pattern>*_ViewFile.php</exclude-pattern>
+	</rule>
+	<!-- Не ставим закрывающий PHP тег там, где это не нужно -->
+	<rule ref="PSR2.Files.ClosingTag">
+		<!-- Исключаем файлы-вьюшки -->
+		<exclude-pattern>/views/*</exclude-pattern>
+	</rule>
+	<!-- При многострочном объявлении массива, закрывающая скобка должна быть на новой строке -->
+	<rule ref="Generic.Arrays.ArrayIndent.CloseBraceNotNewLine" />
+	<!-- Запрещён длинный синтаксис объявления массивов -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+	<!-- После приведения типа не должно быть пробела -->
+	<rule ref="Generic.Formatting.NoSpaceAfterCast"/>
+	<!-- Каждое действие должно быть на отдельной строке -->
+	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+	<!-- Регулируем пробелы между аргументами вызова методов -->
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing">
+		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
+	</rule>
+	<!-- Запрещаем пробелы в начале строк -->
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+
+	<!-- Ключевое слово use в замыкания должно быть отделено пробелами -->
+	<rule ref="PEAR.Functions.FunctionDeclaration.SpaceBeforeUse"/>
+	<!-- Проверка обязательного наличия тега @author в phpdoc'е -->
+	<rule ref="PEAR.Commenting.ClassComment.MissingAuthorTag"/>
+	<!-- Константы true, false и null должны быть в нижнем регистре -->
+	<rule ref="Generic.PHP.LowerCaseConstant"/>
+	<!-- Запрещаем использование короткого тега, так как с PHP 7.4 он запрещён -->
+	<rule ref="Generic.PHP.DisallowShortOpenTag">
+		<!-- Кроме альтернативы echo для вывода через <?= $text ?> -->
+		<exclude name="Generic.PHP.DisallowShortOpenTag.EchoFound"/>
+	</rule>
+	<!-- Используем psr-2 для описания классов -->
+	<rule ref="PSR2.Classes.ClassDeclaration"/>
+	<!-- Все классы должны иметь namespace -->
+	<rule ref="PSR2.Classes.ClassDeclaration.MissingNamespace">
+		<!-- Миграции исключаем из правила -->
+		<exclude-pattern>m\d{6}_\d{6}_.+\.php$</exclude-pattern>
+	</rule>
+	<!-- Регулируем пробелы перед implements -->
+	<rule ref="PSR2.Classes.ClassDeclaration.SpaceBeforeImplements"/>
+	<!-- Регулируем пробелы перед extends -->
+	<rule ref="PSR2.Classes.ClassDeclaration.SpaceBeforeExtends"/>
+	<!-- Регулируем пробелы после названия класса -->
+	<rule ref="PSR2.Classes.ClassDeclaration.SpaceAfterName"/>
+	<!-- Регулируем пробелы после ключевого слова -->
+	<rule ref="PSR2.Classes.ClassDeclaration.SpaceAfterKeyword"/>
+	<!-- Запрещаем подчеркивание в названии атрибутов -->
+	<rule ref="PSR2.Classes.PropertyDeclaration"/>
+	<!-- Наследуем правила описания управляющих структур из PSR-2 -->
+	<rule ref="PSR2.ControlStructures">
+		<!-- Исключаем правило выравнивания break в switch -->
+		<exclude name="PSR2.ControlStructures.SwitchDeclaration"/>
+	</rule>
+	<!-- Наследуем правила для файлов из PSR-2 -->
+	<rule ref="PSR2.Files"/>
+	<!-- Наследуем правила для namespace и use из PSR-2 -->
+	<rule ref="PSR2.Namespaces"/>
+	<!-- Наследуем правила для методов из PSR-2 -->
+	<rule ref="PSR2.Methods">
+		<!-- Исключаем правило, что нельзя разносить параметры на несколько строк -->
+		<exclude name="PSR2.Methods.FunctionCallSignature"/>
+	</rule>
+	<!-- Закрывающая фигурная скобка должна быть на новой строке после тела функции -->
+	<rule ref="PSR2.Methods.FunctionClosingBrace"/>
+
+	<!-- Регуляция пробелов для операторов, в частности, для конкатенации -->
+	<rule ref="PSR12.Operators.OperatorSpacing"/>
+
+	<!-- Проверка двух и более пустых строк (проверяет только внутри методов) -->
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+	<!-- Название классов должно совпадать с названием файла -->
+	<rule ref="Squiz.Classes.ClassFileName"/>
+	<!-- Должно соблюдаться правило "1 файл = 1 класс" -->
+	<rule ref="Squiz.Classes.ClassDeclaration.MultipleClasses"/>
+	<!-- Ключевое слово class должно быть в нижнем регистре -->
+	<rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+	<!-- Ключевое слово self должно быть в нижнем регистре -->
+	<rule ref="Squiz.Classes.SelfMemberReference.IncorrectCase" />
+	<!-- Для обращения к собственным свойствам класса необходимо использовать self/static -->
+	<rule ref="Squiz.Classes.SelfMemberReference.NotUsed" />
+	<!-- При обращении к свойству не должно быть пробела после сдвоенного двоеточия -->
+	<rule ref="Squiz.Classes.SelfMemberReference.SpaceAfter" />
+	<!-- Название классов должно быть в PascalCase -->
+	<rule ref="Squiz.Classes.ValidClassName">
+		<!-- Исключаем миграции -->
+		<exclude-pattern>m\d{6}_\d{6}_.+\.php$</exclude-pattern>
+		<!-- Исключаем шаблоны -->
+		<exclude-pattern>_ViewFile.php$</exclude-pattern>
+		<!-- Исключаем классы тестов -->
+		<exclude-pattern>Test\.php$</exclude-pattern>
+		<!-- Исключаем phpdoc-описание данных из внешних сервисов -->
+		<exclude-pattern>phpdoc/.+\.php$</exclude-pattern>
+	</rule>
+	<!-- Управляющие структуры должны быть в нижнем регистре -->
+	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+	<!-- Не должно быть пробелов между названием функции и её параметром -->
+	<rule ref="Squiz.Functions.FunctionDeclaration.Found"/>
+	<!-- Фигурная скобка начала функции должна быть на новой строке -->
+	<rule ref="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+	<!-- Ключевое слово function должно быть в нижнем регистре -->
+	<rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+	<!-- Используем && и || вместо and и or -->
+	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
+	<!-- Отслеживание недостижимого кода -->
+	<rule ref="Squiz.PHP.NonExecutableCode"/>
+	<!-- Используем && и || вместо and и or -->
+	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+	<!-- Запрещено несколько пустых строк в методах -->
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+	<!-- Регулируем пробелы между операторами -->
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing">
+		<!-- Исключаем регуляцию пробелов перед оператором -->
+		<exclude name="Squiz.WhiteSpace.OperatorSpacing.SpacingBefore" />
+	</rule>
+	<!-- Запрещаем присвоение одновременно нескольким переменным -->
+	<rule ref="Squiz.PHP.DisallowMultipleAssignments" />
+	<!-- Пробел после ключевого слова -->
+	<rule ref="Squiz.ControlStructures.ControlSignature">
+		<!-- Исключаем правило пробела после закрывающей скобки -->
+		<exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace" />
+		<!-- Исключаем файлы-вьюшки -->
+		<exclude-pattern>/views/*</exclude-pattern>
+		<!-- Исключаем классы-вьюшки -->
+		<exclude-pattern>*_ViewFile.php</exclude-pattern>
+	</rule>
+	<!-- Регулируем пробелы в параметрах объявления методов -->
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+		<properties>
+			<!-- Должен быть ровно один пробел -->
+			<property name="equalsSpacing" value="1" />
+		</properties>
+	</rule>
+
+	<!-- При многострочном объявлении массива, должна быть запятая у последнего элемента -->
+	<rule ref="Symfony.Arrays.MultiLineArrayComma" />
+	<!-- Объявляем свойства строго перед методами -->
+	<rule ref="Symfony.Classes.PropertyDeclaration" />
+	<!-- Комментирование классов -->
+	<rule ref="Symfony.Commenting.ClassComment" />
+	<!-- Используем строгое сравнение -->
+	<rule ref="Symfony.ControlStructure.IdenticalComparison" />
+	<!-- Константы слева -->
+	<rule ref="Symfony.ControlStructure.YodaConditions" />
+	<!-- Перед return должна быть пустая строка -->
+	<rule ref="Symfony.Formatting.BlankLineBeforeReturn" />
+	<!-- Оператор присвоения должен быть обрамлён пробелами -->
+	<rule ref="Symfony.Whitespace.AssignmentSpacing" />
+	<!-- Комментирование методов -->
+	<rule ref="Symfony.Commenting.FunctionComment">
+		<!-- Не регулируем пробелы после имён параметров -->
+		<exclude name="Symfony.Commenting.FunctionComment.SpacingAfterParamName" />
+		<!-- Не регулируем пробелы после типов параметров -->
+		<exclude name="Symfony.Commenting.FunctionComment.SpacingAfterParamType" />
+	</rule>
+
+	<!-- Исключения по корневому типу ловим через \Throwable, а не \Exception -->
+	<rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly" />
+	<!-- Каждый импорт должен быть на отдельной строке -->
+	<rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine" />
+	<!-- Импорты должны быть отсортированы -->
+	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses" />
+	<!-- Регулируем пробелы и пустые строки для use -->
+	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing" />
+	<!-- Бесполезное указание типа в phpdoc для констант -->
+	<rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
+	<!-- При указании типа NULL должны быть в конце -->
+	<rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition" />
+	<!-- Пробел перед typehint при return -->
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing" />
+	<!-- Использование nullable typehint'ов -->
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue" />
+	<!-- Пробел после typehint'а и отсутствие при nullable (?) -->
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing" />
+	<!-- Неиспользуемые импорты должны быть удалены -->
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+		<properties>
+			<property name="searchAnnotations" value="1" />
+		</properties>
+	</rule>
+	<!-- Указание typehint'ов -->
+	<rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+		<!-- Исключаем правила явного указания типов для элементов массива, т.к. это не всегда возможно -->
+		<exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification" />
+		<exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification" />
+		<exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification" />
+		<!-- Отменяем правило бесполезности doc-комментов при typehint'ах, ведь они полезны -->
+		<exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment" />
+		<properties>
+			<!-- Отменяем обзязательное указание void -->
+			<property name="enableVoidTypeHint">0</property>
+		</properties>
+	</rule>
+	<!-- Запрещаем использовать проверку через empty() -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty" />
+	<!-- Обязательно указывать declare(strict_types=1) -->
+	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+		<properties>
+			<!-- Должна быть одна пустая строка между <?php и declare -->
+			<property name="newlinesCountBetweenOpenTagAndDeclare" value="2" />
+			<!-- Должна быть одна пустая строка между declare и namespace/use и т.п. -->
+			<property name="newlinesCountAfterDeclare" value="2" />
+			<!-- Не должно быть пробелов в declare(strict_types=1) -->
+			<property name="spacesCountAroundEqualsSign" value="0" />
+		</properties>
+	</rule>
+</ruleset>
