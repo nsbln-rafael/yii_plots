@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 return [
 	'aliases' => [
 		'@bower' => '@vendor/bower-asset',
@@ -15,6 +18,9 @@ return [
 			'username' => 'user',
 			'password' => 'qweqwe',
 			'charset' => 'utf8',
+		],
+		'ros_registry' => [
+			'class' => 'common\components\rosRegistry\RosRegistryService',
 		],
 	],
 ];
