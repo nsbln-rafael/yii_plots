@@ -31,7 +31,7 @@ class SearchForm extends Model
 			[static::ATTR_CADASTRAL_NUMBERS, TrimValidator::class],
 			[static::ATTR_CADASTRAL_NUMBERS, RegexpValidator::class,
 				RegexpValidator::ATTR_PATTERN => '/^((\d{2}:\d{2}:\d{6,7}:\d+,?\s?)+)$/u',
-				RegexpValidator::ATTR_MESSAGE => 'Неправильный формат номер(ов). Пример: 01:02:0100014:6, 01:02:0100014:7' . PHP_EOL,
+				RegexpValidator::ATTR_MESSAGE => 'Неправильный формат номера(ов). Пример: 01:02:0100014:6, 01:02:0100014:7' . PHP_EOL,
 			],
 		];
 	}

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace frontend\models\plots;
+namespace backend\models\plots;
 
 use common\validators\RegexpValidator;
 use common\validators\TrimValidator;
@@ -16,12 +16,6 @@ use yii\base\Model;
  */
 class SearchForm extends Model
 {
-	public const ATTR_ID               = 'id';
-	public const ATTR_CADASTRAL_NUMBER = 'cadastral_number';
-	public const ATTR_PRICE            = 'price';
-	public const ATTR_ADDRESS          = 'address';
-	public const ATTR_AREA             = 'area';
-
 	/** @var string Кадастровые номера */
 	public $cadastral_numbers           = '';
 	public const ATTR_CADASTRAL_NUMBERS = 'cadastral_numbers';
@@ -53,23 +47,6 @@ class SearchForm extends Model
 	}
 
 	/**
-	 * {@inheritdoc}
-	 *
-	 * @author Насибуллин Рафаэль
-	 */
-	public function attributeLabels(): array
-	{
-		return [
-			static::ATTR_ID                => 'ID',
-			static::ATTR_CADASTRAL_NUMBER  => 'Кадастровый номер',
-			static::ATTR_CADASTRAL_NUMBERS => 'Кадастровые номера',
-			static::ATTR_ADDRESS           => 'Адрес',
-			static::ATTR_PRICE             => 'Цена',
-			static::ATTR_AREA              => 'Площадь',
-		];
-	}
-
-	/**
 	 * Поиск участков по кадастровым номерам.
 	 *
 	 * @param array $params Параметры запроса
@@ -85,7 +62,7 @@ class SearchForm extends Model
 		$this->load($params);
 
 		if (false === $this->validate()) {
-			return $plots;
+			return ['error' => $this->getErrors(static::ATTR_CADASTRAL_NUMBERS)];
 		}
 
 		if (true === isset($params[static::ATTR_CADASTRAL_NUMBERS])) {

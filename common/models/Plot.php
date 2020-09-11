@@ -45,6 +45,21 @@ class Plot extends ActiveRecord
 	 *
 	 * @author Насибуллин Рафаэль
 	 */
+	public function fields(): array
+	{
+		return [
+			static::ATTR_CADASTRAL_NUMBER,
+			static::ATTR_ADDRESS,
+			static::ATTR_AREA,
+			static::ATTR_PRICE,
+		];
+	}
+
+	/**
+	 * {@inheritdoc}
+	 *
+	 * @author Насибуллин Рафаэль
+	 */
 	public function rules(): array
 	{
 		return [
