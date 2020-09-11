@@ -6,7 +6,6 @@ git clone git@github.com:nsbln-rafael/yii_plots.git
 composer install (в корне проекта)
 composer install (в папке linters)
 php init
-php init
 ```
 Настроить подключение к базе данных(+ тестовое окружение) и выполнить команды:
 ```
