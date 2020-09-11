@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace common\validators;
+
 /**
  * @inheritdoc
  *
@@ -9,7 +11,7 @@ declare(strict_types=1);
  */
 class StringValidator extends \yii\validators\StringValidator
 {
-	const ATTR_MIN            = 'min';
-	const ATTR_MAX            = 'max';
-	const ATTR_NUMBER_PATTERN = 'length';
+	public const ATTR_MIN            = 'min';
+	public const ATTR_MAX            = 'max';
+	public const ATTR_NUMBER_PATTERN = 'length';
 }

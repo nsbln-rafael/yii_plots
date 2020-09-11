@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace common\validators;
+
 /**
  * @inheritdoc
  *
@@ -9,8 +11,8 @@ declare(strict_types=1);
  */
 class NumberValidator extends \yii\validators\NumberValidator
 {
-	const ATTR_MIN            = 'min';
-	const ATTR_MAX            = 'max';
-	const ATTR_NUMBER_PATTERN = 'numberPattern';
-	const ATTR_MESSAGE        = 'message';
+	public const ATTR_MIN            = 'min';
+	public const ATTR_MAX            = 'max';
+	public const ATTR_NUMBER_PATTERN = 'numberPattern';
+	public const ATTR_MESSAGE        = 'message';
 }

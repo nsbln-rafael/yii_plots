@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace app\models;
+namespace common\models;
 
-use NumberValidator;
-use StringValidator;
-use Yii;
+use common\validators\NumberValidator;
+use common\validators\StringValidator;
 use yii\db\ActiveRecord;
 use yii\validators\RequiredValidator;
 
@@ -15,6 +14,7 @@ use yii\validators\RequiredValidator;
  *
  * @property int    $id               Идентификатор
  * @property string $cadastral_number Кадастровый номер
+ * @property string $cadastral_id     Отформатированный кадастровый номер
  * @property string $address          Адрес
  * @property float  $price            Цена
  * @property float  $area             Площадь
@@ -25,6 +25,7 @@ class Plot extends ActiveRecord
 {
 	public const ATTR_ID               = 'id';
 	public const ATTR_CADASTRAL_NUMBER = 'cadastral_number';
+	public const ATTR_CADASTRAL_ID     = 'cadastral_id';
 	public const ATTR_ADDRESS          = 'address';
 	public const ATTR_PRICE            = 'price';
 	public const ATTR_AREA             = 'area';
@@ -49,6 +50,8 @@ class Plot extends ActiveRecord
 		return [
 			[static::ATTR_CADASTRAL_NUMBER, RequiredValidator::class],
 			[static::ATTR_CADASTRAL_NUMBER, StringValidator::class, StringValidator::ATTR_MAX => 255],
+			[static::ATTR_CADASTRAL_ID,     RequiredValidator::class],
+			[static::ATTR_CADASTRAL_ID,     StringValidator::class, StringValidator::ATTR_MAX => 255],
 			[static::ATTR_ADDRESS,          RequiredValidator::class],
 			[static::ATTR_ADDRESS,          StringValidator::class, StringValidator::ATTR_MAX => 255],
 			[static::ATTR_PRICE,            RequiredValidator::class],
@@ -66,11 +69,11 @@ class Plot extends ActiveRecord
 	public function attributeLabels(): array
 	{
 		return [
-			static::ATTR_ID               => Yii::t('common', 'ID'),
-			static::ATTR_CADASTRAL_NUMBER => Yii::t('common', 'Кадастровый номер'),
-			static::ATTR_ADDRESS          => Yii::t('common', 'Адрес'),
-			static::ATTR_PRICE            => Yii::t('common', 'Цена'),
-			static::ATTR_AREA             => Yii::t('common', 'Площадь'),
+			static::ATTR_ID               => 'ID',
+			static::ATTR_CADASTRAL_NUMBER => 'Кадастровый номер',
+			static::ATTR_ADDRESS          => 'Адрес',
+			static::ATTR_PRICE            => 'Цена',
+			static::ATTR_AREA             => 'Площадь',
 		];
 	}
 }

@@ -53,13 +53,12 @@ class RosRegistryService extends Component
 	 */
 	public function search(string $number): ?Plot
 	{
-		$plot = Plot::findOne([Plot::ATTR_CADASTRAL_NUMBER => $number]);
+		$number = $this->getFormattedNumber($number);
+		$plot   = Plot::findOne([Plot::ATTR_CADASTRAL_ID => $number]);
 
 		if (null !== $plot) {
 			return $plot;
 		}
-
-		$number = $this->getFormattedNumber($number);
 
 		$response = $this->client->createRequest()
 			->setMethod('GET')
@@ -75,6 +74,7 @@ class RosRegistryService extends Component
 		if (null !== $data) {
 			$plot                   = new Plot;
 			$plot->cadastral_number = $data->cadastral_number;
+			$plot->cadastral_id     = $data->cadastral_id;
 			$plot->price            = $data->price;
 			$plot->area             = $data->area;
 			$plot->address          = $data->address;

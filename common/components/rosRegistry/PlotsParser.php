@@ -31,6 +31,7 @@ class PlotsParser
 			$data                     = $data['feature']['attrs'];
 			$result                   = new PlotResponse;
 			$result->cadastral_number = $data['cn'];
+			$result->cadastral_id     = $data['id'];
 			$result->address          = $data['address'];
 			$result->area             = $data['area_value'];
 			$result->price            = $data['cad_cost'];

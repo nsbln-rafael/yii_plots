@@ -22,6 +22,7 @@ class m200909_072852_create_plots_table extends Migration
 		$this->createTable(static::TABLE_NAME, [
 			'id'               => $this->primaryKey(),
 			'cadastral_number' => $this->string()->notNull(),
+			'cadastral_id'     => $this->string()->notNull(),
 			'address'          => $this->string()->notNull(),
 			'price'            => $this->decimal(14, 4)->notNull(),
 			'area'             => $this->decimal(14, 4)->notNull(),
@@ -29,9 +30,10 @@ class m200909_072852_create_plots_table extends Migration
 
 		$this->addCommentOnTable(static::TABLE_NAME, 'Справочник участков');
 		$this->addCommentOnColumn(static::TABLE_NAME, 'cadastral_number', 'Кадастровый номер');
-		$this->addCommentOnColumn(static::TABLE_NAME, 'address', 'Адрес');
-		$this->addCommentOnColumn(static::TABLE_NAME, 'price', 'Цена');
-		$this->addCommentOnColumn(static::TABLE_NAME, 'area', 'Площадь');
+		$this->addCommentOnColumn(static::TABLE_NAME, 'cadastral_id',     'Отформатированный кадастровый номер');
+		$this->addCommentOnColumn(static::TABLE_NAME, 'address',          'Адрес');
+		$this->addCommentOnColumn(static::TABLE_NAME, 'price',            'Цена');
+		$this->addCommentOnColumn(static::TABLE_NAME, 'area',             'Площадь');
 	}
 
 	/**
