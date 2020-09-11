@@ -23,7 +23,6 @@ class PlotsController extends Controller
 	/** @var array Используемый сериалайзер */
 	public $serializer = [
 		'class' => 'yii\rest\Serializer',
-		'collectionEnvelope' => 'items',
 	];
 
 	/**
@@ -38,8 +37,17 @@ class PlotsController extends Controller
 		Yii::$app->response->format = Response::FORMAT_JSON;
 
 		$model  = new SearchForm();
-		$result = $model->search(Yii::$app->request->queryParams);
 
-		return $result;
+		$model->load(Yii::$app->request->queryParams);
+
+		if (false === $model->validate()) {
+			Yii::$app->response->statusCode = 400;
+
+			return ['error' => $model->getErrors(SearchForm::ATTR_CADASTRAL_NUMBERS)];
+		}
+
+		$result = $model->search();
+
+		return ['data' => $result];
 	}
 }

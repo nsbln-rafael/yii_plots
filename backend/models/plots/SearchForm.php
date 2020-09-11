@@ -49,24 +49,16 @@ class SearchForm extends Model
 	/**
 	 * Поиск участков по кадастровым номерам.
 	 *
-	 * @param array $params Параметры запроса
-	 *
 	 * @return array
 	 *
 	 * @author Насибуллин Рафаэль
 	 */
-	public function search(array $params): array
+	public function search(): array
 	{
 		$plots = [];
 
-		$this->load($params);
-
-		if (false === $this->validate()) {
-			return ['error' => $this->getErrors(static::ATTR_CADASTRAL_NUMBERS)];
-		}
-
-		if (true === isset($params[static::ATTR_CADASTRAL_NUMBERS])) {
-			$numbers = preg_split('/,\s?|\s+/u', $params[static::ATTR_CADASTRAL_NUMBERS]);
+		if ('' !== $this->cadastral_numbers) {
+			$numbers = preg_split('/,\s?|\s+/u', $this->cadastral_numbers);
 			$numbers = array_map('trim', $numbers);
 			$numbers = array_unique($numbers);
 
