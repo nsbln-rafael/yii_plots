@@ -89,7 +89,7 @@ class SearchForm extends Model
 		}
 
 		if (true === isset($params[static::ATTR_CADASTRAL_NUMBERS])) {
-			$numbers = explode(',', $params[static::ATTR_CADASTRAL_NUMBERS]);
+			$numbers = preg_split('/,\s?|\s+/u', $params[static::ATTR_CADASTRAL_NUMBERS]);
 			$numbers = array_map('trim', $numbers);
 			$numbers = array_unique($numbers);
 
