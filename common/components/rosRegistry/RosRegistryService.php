@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace common\components\rosRegistry;
 
+use common\components\rosRegistry\response\PlotResponse;
 use common\models\Plot;
 use yii\base\Component;
 use yii\httpclient\Client;
@@ -45,43 +46,42 @@ class RosRegistryService extends Component
 	/**
 	 * Поиск участков по кадастровым номерам.
 	 *
-	 * @param string $number Кадастровый номер
+	 * @param array $numbers Кадастровые номера
 	 *
-	 * @return Plot|null
+	 * @return array
 	 *
 	 * @author Насибуллин Рафаэль
 	 */
-	public function search(string $number): ?Plot
+	public function search(array $numbers): array
 	{
-		$number = $this->getFormattedNumber($number);
-		$plot   = Plot::findOne([Plot::ATTR_CADASTRAL_ID => $number]);
+		$plots = [];
 
-		if (null !== $plot) {
-			return $plot;
+		foreach ($numbers as $number) {
+			$number = $this->getFormattedNumber($number);
+			$plot   = Plot::findOne([Plot::ATTR_CADASTRAL_ID => $number]);
+
+			if (null !== $plot) {
+				array_push($plots, $plot);
+
+				continue;
+			}
+
+			$data = $this->getData($number);
+
+			if (null !== $data) {
+				$plot                   = new Plot;
+				$plot->cadastral_number = $data->cadastral_number;
+				$plot->cadastral_id     = $data->cadastral_id;
+				$plot->price            = $data->price;
+				$plot->area             = $data->area;
+				$plot->address          = $data->address;
+				$plot->save();
+
+				array_push($plots, $plot);
+			}
 		}
 
-		$response = $this->client->createRequest()
-			->setMethod('GET')
-			->setUrl($this->url . http_build_query(['l' => 1 , 'i' => $number]))
-			->send();
-
-		if ($response->isOk) {
-			$data = $this->parser->parse($response->content);
-		} else {
-			throw new BadRequestHttpException('Ошибка! Не удалось получить данные. Попробуйте позже.');
-		}
-
-		if (null !== $data) {
-			$plot                   = new Plot;
-			$plot->cadastral_number = $data->cadastral_number;
-			$plot->cadastral_id     = $data->cadastral_id;
-			$plot->price            = $data->price;
-			$plot->area             = $data->area;
-			$plot->address          = $data->address;
-			$plot->save();
-		}
-
-		return $plot;
+		return $plots;
 	}
 
 	/**
@@ -102,5 +102,30 @@ class RosRegistryService extends Component
 		$result = implode(':', $array);
 
 		return $result;
+	}
+
+	/**
+	 * Отправка запрос в РосРеестр и получение ответа.
+	 *
+	 * @param string $number Кадастровый номер
+	 *
+	 * @return PlotResponse|null
+	 *
+	 * @author Насибуллин Рафаэль
+	 */
+	private function getData(string $number): ?PlotResponse
+	{
+		$response = $this->client->createRequest()
+			->setMethod('GET')
+			->setUrl($this->url . http_build_query(['l' => 1 , 'i' => $number]))
+			->send();
+
+		if ($response->isOk) {
+			$data = $this->parser->parse($response->content);
+		} else {
+			throw new BadRequestHttpException('Ошибка! Не удалось получить данные. Попробуйте позже.');
+		}
+
+		return $data;
 	}
 }

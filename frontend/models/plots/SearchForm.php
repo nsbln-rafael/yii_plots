@@ -93,13 +93,7 @@ class SearchForm extends Model
 			$numbers = array_map('trim', $numbers);
 			$numbers = array_unique($numbers);
 
-			foreach ($numbers as $number) {
-				$result = Yii::$app->ros_registry->search($number);
-
-				if (null !== $result) {
-					array_push($plots, $result);
-				}
-			}
+			$plots = Yii::$app->ros_registry->search($numbers);
 		}
 
 		return $plots;
